@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pin Generator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="pin-generator half-width">
+            <input
+              class="form-control"
+              type="text"
+              id="generate-box"
+              value=""
+            />
+            <button class="generate-btn" id="generate-btn">Generate Pin</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-section half-width">
+            <input
+              class="form-control"
+              type="text"
+              id="dialed-number"
+              value=""
+            />
+            <div class="numbers">
+              <div class="calc-body">
+                <div class="calc-button-row">
+                  <div class="button number" id="7">7</div>
+                  <div class="button number" id="8">8</div>
+                  <div class="button number" id="9">9</div>
+                </div>
+                <div class="calc-button-row">
+                  <div class="button number" id="4">4</div>
+                  <div class="button number" id="5">5</div>
+                  <div class="button number" id="6">6</div>
+                </div>
+                <div class="calc-button-row">
+                  <div class="button number" id="1">1</div>
+                  <div class="button number" id="2">2</div>
+                  <div class="button number" id="3">3</div>
+                </div>
+                <div class="calc-button-row">
+                  <div
+                    class="button"
+                    onclick="removeExecution('backspace')"
+                    id="backspace"
+                  >
+                    <
+                  </div>
+                  <div class="button number" id="0">0</div>
+                  <div class="button" onclick="removeExecution('clear')" id="clear"
+                  >C
+                </div>
+              </div>
+              <div>
+                <button type="submit" class="submit-btn" id="submit-pin" onclick="checkPin()">
+                  Submit
+                </button>
+                <p class="action-left">3 try left</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notify-section">
+        <p class="notify" id="miss-matched">
+          ❌ Pin Didn't Match, Please try again
+        </p>
+        <p class="notify" id="matched">
+          ✅ Pin Matched... Secret door is opening for you
+        </p>
+      </div>
+    </div>
+
+    <script>
+    /*...Function to Display Generated random Number...*/
+      function showGenerateNumber(number) {
+        document.getElementById("generate-box").value = number;
+      }
+      /*...Function to Display Dialed Number...*/
+      function showDialedNumber(number) {
+        document.getElementById("dialed-number").value = number;
+      }
+
+    /*Generate & display Random Number*/
+      var generateBtn = document.getElementById("generate-btn");
+      generateBtn.addEventListener("click", function () {
+        randomNumber = Math.round(1000 + Math.random() * 9000);
+        showGenerateNumber(randomNumber);
+      });
+
+    /*Capture & Handle Numbers from keypad*/
+      var number = document.getElementsByClassName("number");
+      for (var i = 0; i < number.length; i++) {
+        number[i].addEventListener("click", function () {
+          var dialedNumber = document.getElementById("dialed-number").value;
+          dialedNumber = dialedNumber + this.id;
+          showDialedNumber(dialedNumber);
+        });
+      }
+
+    /*Handle Backspace & Clear Button*/
+      function removeExecution(id) {
+        if (id == 'backspace') {
+          var dialedNumber = document.getElementById("dialed-number").value;
+          dialedNumber = dialedNumber.substr(0, dialedNumber.length - 1);
+          showDialedNumber(dialedNumber);
+        }
+
+        if (id == 'clear') {
+          showDialedNumber("");
+        }
+      }
+      
+    /*Check Pin using Submit Button*/
+      function checkPin(){
+          var randomNumber=document.getElementById("generate-box").value;
+          var dialedNumber=document.getElementById("dialed-number").value;
+          if (randomNumber == dialedNumber) {
+              document.getElementById("matched").style.display="block";
+              document.getElementById("miss-matched").style.display="none";
+              
+          }
+          else{
+             document.getElementById("miss-matched").style.display="block";
+             document.getElementById("matched").style.display="none";
+          }
+      }
+
+
+      //  var backspace=document.getElementById("backspace");
+      //     backspace.addEventListener("click", function(){
+      //        var dialedNumber=document.getElementById("dialed-number").value;
+      //        dialedNumber=dialedNumber.substr(0, dialedNumber.length-1);
+      //        showDialedNumber(dialedNumber);
+      //     })
+
+      //  var clearAll=document.getElementById("clear");
+      //     clearAll.addEventListener("click", function(){
+      //        showDialedNumber("");
+      //     })
+    </script>
+  </body>
+</html>
