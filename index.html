@@ -68,7 +68,7 @@
                 <button type="submit" class="submit-btn" id="submit-pin" onclick="checkPin()">
                   Submit
                 </button>
-                <p class="action-left">3 try left</p>
+                <p class="action-left"><span id="count-click">3</span> try left</p>
               </div>
             </div>
           </div>
@@ -126,6 +126,10 @@
       
     /*Check Pin using Submit Button*/
       function checkPin(){
+        var maxTry=document.getElementById("count-click").innerHTML;
+        maxTry--;
+        document.getElementById("count-click").innerHTML=maxTry;
+        if (maxTry>=1) { 
           var randomNumber=document.getElementById("generate-box").value;
           var dialedNumber=document.getElementById("dialed-number").value;
           if (randomNumber == dialedNumber) {
@@ -137,6 +141,11 @@
              document.getElementById("miss-matched").style.display="block";
              document.getElementById("matched").style.display="none";
           }
+        }
+        
+        else{
+          document.getElementById("submit-pin").style.display="none";
+        }
       }
 
     </script>
