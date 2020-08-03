@@ -96,7 +96,7 @@
       }
 
 
-    /*Generate & display Random Number*/
+    /*Generate & Pass Random Number*/
       var generateBtn = document.getElementById("generate-btn");
       generateBtn.addEventListener("click", function () {
         randomNumber = Math.round(1000 + Math.random() * 9000);
@@ -131,27 +131,29 @@
 
     /*Check Pin using Submit Button*/
       function checkPin(){
-        var maxTry=document.getElementById("count-click").innerHTML;
-        maxTry--;
-        document.getElementById("count-click").innerHTML=maxTry;
-
-        if (maxTry>=1) { 
+          var maxTry=document.getElementById("count-click").innerHTML;
+      
           var randomNumber=document.getElementById("generate-box").value;
           var dialedNumber=document.getElementById("dialed-number").value;
 
           if (randomNumber == dialedNumber) {
+            /*...If pin match, Tries restore to 3...*/
+              document.getElementById("count-click").innerHTML=3;
+
               document.getElementById("matched").style.display="block";
               document.getElementById("miss-matched").style.display="none";  
           }
           else{
              document.getElementById("miss-matched").style.display="block";
              document.getElementById("matched").style.display="none";
-          }
-        }
 
-        else{
-          document.getElementById("submit-pin").style.display="none";
+             maxTry--;
+             document.getElementById("count-click").innerHTML=maxTry;
+
+            if (maxTry==0){
+                document.getElementById("submit-pin").style.display="none";
         }
+          }
       }
 
     </script>
